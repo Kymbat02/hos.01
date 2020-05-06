@@ -5,6 +5,7 @@ import HOSPITAL_02.CLIENT.APP.Panel;
 import HOSPITAL_02.CLIENT.APP.Label;
 import HOSPITAL_02.CLIENT.APP.Button;
 import HOSPITAL_02.DATA.Doctor;
+import HOSPITAL_02.CLIENT.PAGE.ClientApp;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
