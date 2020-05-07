@@ -15,7 +15,7 @@ public class ServerApp {
     public static void main(String args[]){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/user?useUnicode=true&serverTimezone=UTC","root", "");
+            connection= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/user?useUnicode=true&serverTimezone=UTC","root", "");
             ServerSocket serverSocket=new ServerSocket(2012);
             System.out.println("Waiting for a client...");
             while(true){
@@ -47,13 +47,13 @@ public class ServerApp {
     public static void ClientsRecord(Treatment treatment){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
-                    "INSERT INTO records(id, client_id, nameOfDoctor,treatment1, price, count)"+
+                    "INSERT INTO records(id, client_id, nameOfDoctor,treatment1, count1, sum)"+
                     " VALUES(null, ?, ?, ?, ?,?) ");
             statement.setLong(1,treatment.getClient_id());
             statement.setString(2,treatment.getDoctorName());
             statement.setString(3,treatment.getTreatment());
-            statement.setInt(4,treatment.getPrice());
-            statement.setInt(5,treatment.getCount());
+            statement.setInt(4,treatment.getCount());
+            statement.setInt(5,treatment.getSum());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
@@ -84,12 +84,13 @@ public class ServerApp {
     public static void addDoctor(Doctor doc){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
-                    "INSERT INTO doctors(id_doctor, fullname,placeOfWork, price,count )"+
-                    " VALUES(null, ?,?,?,?)");
+                    "INSERT INTO doctors(id_doctor, fullname,placeOfWork, price,count,occupied )"+
+                    " VALUES(null, ?,?,?,?,?)");
             statement.setString(1,doc.getFullname());
             statement.setString(2,doc.getPlaceOfWork());
             statement.setInt(3,doc.getPrice());
             statement.setInt(4,doc.getCount());
+            statement.setInt(5,doc.getOccupied());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
@@ -108,8 +109,9 @@ public class ServerApp {
                 String placeOfWork=resultSet.getString("placeOfwork");
                 int price=resultSet.getInt("price");
                 int count=resultSet.getInt("count");
+                int occupied=resultSet.getInt("occupied");
 
-                doctor.add(new Doctor(id_doctor, fullname, placeOfWork, price,count));
+                doctor.add(new Doctor(id_doctor, fullname, placeOfWork, price,count,occupied));
             }
             statement.close();
         } catch (SQLException e) {
@@ -120,13 +122,14 @@ public class ServerApp {
     public static void editDoctor(Doctor doctor){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
-                    " UPDATE doctors set fullname=?,placeOfWork=?,price=?,count=?"+
+                    " UPDATE doctors set fullname=?,placeOfWork=?,price=?,count=?,occupied=?"+
                     " WHERE id_doctor=?");
             statement.setString(1,doctor.getFullname());
             statement.setString(2,doctor.getPlaceOfWork());
             statement.setInt(3,doctor.getPrice());
             statement.setInt(4,doctor.getCount());
-            statement.setLong(5,doctor.getId());
+            statement.setInt(5,doctor.getOccupied());
+            statement.setLong(6,doctor.getId());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
@@ -146,7 +149,8 @@ public class ServerApp {
                 String placeOfWork = resultSet.getString("placeOfwork");
                 int price = resultSet.getInt("price");
                 int count = resultSet.getInt("count");
-                doctor = new Doctor(id_doctor, fullname, placeOfWork, price, count);
+                int occupied = resultSet.getInt("occupied");
+                doctor = new Doctor(id_doctor, fullname, placeOfWork, price, count,occupied);
             }
             statement.close();
         } catch (SQLException e) {
@@ -154,11 +158,11 @@ public class ServerApp {
         }
         return doctor;
     }
-    public static void updateRecord(Long id,int newcount, int count){
+    public static void updateRecord(Long id,int newcount, int occupied){
         try {
-            PreparedStatement statement=connection.prepareStatement("UPDATE records set count=? WHERE id=?");
-            statement.setInt(1, count);
-            statement.setInt(2, newcount);
+            PreparedStatement statement=connection.prepareStatement("UPDATE doctors set occupied=? count=? WHERE id_doctor=?");
+            statement.setInt(1, newcount);
+            statement.setInt(2, occupied);
             statement.setLong(3, id);
             statement.executeUpdate();
             statement.close();
@@ -187,7 +191,7 @@ public class ServerApp {
             ResultSet resultSet=statement.executeQuery();
             while(resultSet.next()){
                 Long id1=resultSet.getLong("id");
-                Long client_id=resultSet.getLong("id_client");
+                Long client_id=resultSet.getLong("client_id");
                 String nameOfDoctor=resultSet.getString("nameOfDoctor");
                 String treatment1=resultSet.getString("treatment1");
                 int price=resultSet.getInt("price");

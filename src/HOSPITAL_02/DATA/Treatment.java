@@ -7,28 +7,28 @@ public class Treatment implements Serializable {
     private Long client_id;
     private String doctorName;
     private String treatment;
-    private int price;
     private int count;
+    private int sum;
 
     public Treatment() {
     }
 
-    public Treatment(Long id, Long client_id, String doctorName,String treatment, int price, int count) {
+    public Treatment(Long id, Long client_id, String doctorName,String treatment, int count, int sum) {
         this.id = id;
         this.client_id = client_id;
         this.doctorName = doctorName;
         this.treatment=treatment;
-        this.price = price;
-        this.count=count;
+        this.count = count;
+        this.sum=sum;
     }
 
 
-    public int getPrice() {
-        return price;
+    public int getSum() {
+        return sum;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setSum(int price) {
+        this.sum = sum;
     }
 
     public int getCount() {

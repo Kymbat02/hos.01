@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class Treatment extends Panel {
     public MainFrame parent;
-    private Label idLabel, doctorNameLabel, priceLabel,treatmentLabel,countLabel;
+    private Label idLabel,  fiotLabel, placeOfWorkLabel,priceLabel,countLabel;
     private Button buyButton, backButton, refreshButton;
-    private Field idField, doctorNameField, priceField,countField;
+    private Field idField,fioField,priceField,countField;
     private String[] places={"choose", "ALLERGOLOGY", "NEUROLOGY", "ONCOLOGY","THERAPY","PSYCHOTHERAPY"};
     private Object[] columns={"ID", "DOCTORNAME", "TREATMENT",  "PRICE", "COUNT"};
     private JComboBox jCombot;
@@ -45,7 +45,7 @@ public class Treatment extends Panel {
             public void mouseClicked(MouseEvent e) {
                 int i=table.getSelectedRow();
                 idField.setText(model.getValueAt(i,0).toString());
-                doctorNameField.setText(model.getValueAt(i,1).toString());
+                fioField.setText(model.getValueAt(i,1).toString());
                 jCombot.setSelectedItem(model.getValueAt(i,2).toString());
                 priceField.setText(model.getValueAt(i,3).toString());
                 countField.setText("");
@@ -83,16 +83,16 @@ public class Treatment extends Panel {
         idField.setLocation(250, 420);
         add(idField);
 
-        doctorNameLabel=new Label("Doctor name:");
-        doctorNameLabel.setLocation(120, 460);
-        add(doctorNameLabel);
-        doctorNameField=new Field();
-        doctorNameField.setLocation(250, 460);
-        add(doctorNameField);
+        fiotLabel=new Label("Doctor name:");
+        fiotLabel.setLocation(120, 460);
+        add(fiotLabel);
+        fioField=new Field();
+        fioField.setLocation(250, 460);
+        add(fioField);
 
-        treatmentLabel=new Label("Treatment:");
-        treatmentLabel.setLocation(120, 500);
-        add(treatmentLabel);
+        placeOfWorkLabel=new Label("Treatment:");
+        placeOfWorkLabel.setLocation(120, 500);
+        add(placeOfWorkLabel);
         jCombot=new JComboBox(places);
         jCombot.setBounds(250, 500, 200, 30);
         jCombot.setBackground(Color.orange);
@@ -122,7 +122,7 @@ public class Treatment extends Panel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Long id=Long.valueOf(idField.getText());
-                String nameOfDoctor=doctorNameField.getText();
+                String nameOfDoctor=fioField.getText();
                 String treatment1=jCombot.getSelectedItem().toString();
                 int price=Integer.parseInt(priceField.getText());
                 int count=Integer.parseInt(countField.getText());
@@ -130,11 +130,11 @@ public class Treatment extends Panel {
                     JOptionPane.showMessageDialog(parent, "Please, fill all fields!!!");
                 }
                 else{
-                    HOSPITAL_02.DATA.Treatment treatment=new HOSPITAL_02.DATA.Treatment(null,ClientApp.currentUser.getId(),nameOfDoctor,treatment1,price,count);
+                    HOSPITAL_02.DATA.Treatment treatment=new HOSPITAL_02.DATA.Treatment(null,ClientApp.currentUser.getId(),nameOfDoctor,treatment1,count,price*count);
                     parent.clientSocket.clientsRecord(treatment);
                     Doctor doctor=new Doctor(id, null, null,0,0);
-                    parent.clientSocket.editDoctor(doctor);
-                    doctorNameField.setText("");
+                    parent.clientSocket.editTreatment(doctor);
+                    fioField.setText("");
                     jCombot.setSelectedIndex(0);
                     priceField.setText("");
                     countField.setText("");

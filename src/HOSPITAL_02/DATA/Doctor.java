@@ -7,17 +7,19 @@ public class Doctor extends User {
     private int oplata;
     private String zakluchenie;
     private int count;
+    private int occupied;
 
     public Doctor(Object o, String fullname, int price, String placeOfWork, int i, String oplata, String zakluchenie,int count) {
     }
 
-    public Doctor(Long id, String login, String password, String fullname, int role, String placeOfWork, int price, int oplata, String zakluchenie,int count) {
+    public Doctor(Long id, String login, String password, String fullname, int role, String placeOfWork, int price, int oplata, String zakluchenie,int count,int occupied) {
         super(id, login, password, fullname, role);
         this.placeOfWork = placeOfWork;
         this.price = price;
         this.oplata = oplata;
         this.zakluchenie = zakluchenie;
         this.count=count;
+        this.occupied=occupied;
     }
 
     public Doctor() {
@@ -36,6 +38,14 @@ public class Doctor extends User {
         this.placeOfWork = placeOfWork;
         this.price = price;
         this.count=count;
+    }
+
+    public Doctor(Long id,  String fullname, String placeOfWork, int price,int count,int occupied) {
+        super(id,  fullname);
+        this.placeOfWork = placeOfWork;
+        this.price = price;
+        this.count=count;
+        this.occupied=occupied;
     }
 
     public int getCount() {
@@ -76,5 +86,13 @@ public class Doctor extends User {
 
     public void setZakluchenie(String zakluchenie) {
         this.zakluchenie = zakluchenie;
+    }
+
+    public int getOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(int occupied) {
+        this.occupied = occupied;
     }
 }

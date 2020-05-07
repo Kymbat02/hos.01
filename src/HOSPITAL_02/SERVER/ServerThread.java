@@ -60,10 +60,11 @@ public class ServerThread extends Thread {
                     Treatment treatment=(Treatment)packet.getData();
                     ServerApp.ClientsRecord(treatment);
                 }
+
                 else if(packet.getCode().equals("EDIT_TREATMENT")){
-                    Doctor doctor=(Doctor) packet.getData();
-                    Doctor dr=ServerApp.getDoctor(doctor.getId());
-                    int newcount=dr.getCount()-doctor.getCount();
+                    Doctor doctor=(Doctor)packet.getData();
+                    Doctor db=ServerApp.getDoctor(doctor.getId());
+                    int newcount=db.getCount()-doctor.getCount();
                     ServerApp.updateRecord(doctor.getId(), newcount, doctor.getCount());
                 }
                 else if(packet.getCode().equals("LIST_CLIENT_TREAT")){

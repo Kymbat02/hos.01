@@ -102,6 +102,15 @@ public class ClientSocket {
         }
     }
 
+    public void editTreatment(Doctor doctor){
+        Packet packet=new Packet("EDIT_TREATMENT", doctor);
+        try {
+            oos.writeObject(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ArrayList<Treatment> getAllTreatment(Treatment treatment){
         ArrayList<Treatment> treatments=new ArrayList<>();
         Packet packet=new Packet("LIST_CLIENT_TREAT", treatments);

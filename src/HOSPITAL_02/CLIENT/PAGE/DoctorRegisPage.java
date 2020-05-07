@@ -21,11 +21,11 @@ import java.util.ArrayList;
 
 public class DoctorRegisPage extends Panel {
     private MainFrame clientFrame;
-    private Label idLabel,  fiotLabel, placeOfWorkLabel,priceLabel,countLabel;
+    private Label idLabel,  fiotLabel, placeOfWorkLabel,priceLabel,countLabel,ocLabel;
     private Button addButton, editButton, deleteButton, backButton, refreshButton;
-    private Field idField,fioField,priceField,oplataField,zakluchenieField,countField;
+    private Field idField,fioField,priceField,oplataField,zakluchenieField,countField,ocField;
     private String[] places={"choose", "ALLERGOLOGY", "NEUROLOGY", "ONCOLOGY","THERAPY","PSYCHOTHERAPY"};
-    private Object[] columns={"ID", "Full name", "Place of Work", "Price","Count"};
+    private Object[] columns={"ID", "Full name", "Place of Work", "Price","Count","Occupied"};
     private JComboBox jComboPlaces;
     private JTable table;
     private DefaultTableModel model;
@@ -51,6 +51,7 @@ public class DoctorRegisPage extends Panel {
                 jComboPlaces.setSelectedItem(model.getValueAt(i,2).toString());
                 priceField.setText(model.getValueAt(i,3).toString());
                 countField.setText(model.getValueAt(i,4).toString());
+                ocField.setText(model.getValueAt(i,5).toString());
 
 
             }
@@ -119,6 +120,12 @@ public class DoctorRegisPage extends Panel {
         countField.setLocation(150, 540);
         add(countField);
 
+        ocLabel=new Label("Occupied::");
+        ocLabel.setLocation(20, 600);
+        add(ocLabel);
+        ocField=new Field();
+        ocField.setLocation(150, 600);
+        add(ocField);
 
 
         addButton= new Button("ADD");
@@ -131,6 +138,7 @@ public class DoctorRegisPage extends Panel {
                 String placeOfWork=jComboPlaces.getSelectedItem().toString();
                 int price=Integer.parseInt(priceField.getText());
                 int count=Integer.parseInt(countField.getText());
+                int occupied=Integer.parseInt(ocField.getText());
 
 
                 if(fullname.isEmpty() || placeOfWork.isEmpty() ){
@@ -143,6 +151,7 @@ public class DoctorRegisPage extends Panel {
                     jComboPlaces.setSelectedIndex(0);
                     priceField.setText("");
                     countField.setText("");
+                    ocField.setText("");
                     JOptionPane.showMessageDialog(clientFrame, " Your appointment is added successfully!!!");
                     clearMedCenter();
                     updateMedCenter();
@@ -162,7 +171,8 @@ public class DoctorRegisPage extends Panel {
                 String placeOfWork=jComboPlaces.getSelectedItem().toString();
                 int price=Integer.parseInt(priceField.getText());
                 int count=Integer.parseInt(countField.getText());
-                Doctor doctor=new Doctor(id,fullname,placeOfWork,price,count);
+                int occupied=Integer.parseInt(ocField.getText());
+                Doctor doctor=new Doctor(id,fullname,placeOfWork,price,count,occupied);
                 clientFrame.clientSocket.editDoctor(doctor);
                 JOptionPane.showMessageDialog(clientFrame, " Your edit was added successfully!!!");
                 clearMedCenter();
@@ -177,7 +187,7 @@ public class DoctorRegisPage extends Panel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Long id=Long.valueOf(idField.getText());
-                Doctor doctor=new Doctor(id, null, null, 0,0);
+                Doctor doctor=new Doctor(id, null, null, 0,0,0);
                 clientFrame.clientSocket.deleteDoctor(doctor);
                 JOptionPane.showMessageDialog(clientFrame, " You deleted doctor from list!!!");
                 clearMedCenter();
@@ -211,13 +221,14 @@ public class DoctorRegisPage extends Panel {
     }
     public void updateMedCenter(){
         doctor=clientFrame.clientSocket.getAllInformation();
-        Object[] row=new Object[5];
+        Object[] row=new Object[6];
         for(Doctor d:doctor){
             row[0]=d.getId();
             row[1]=d.getFullname();
             row[2]=d.getPlaceOfWork();
             row[3]=d.getPrice();
             row[4]=d.getCount();
+            row[5]=d.getOccupied();
             model.addRow(row);
         }
     }
