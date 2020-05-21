@@ -64,6 +64,7 @@ public class ClientSocket {
             e.printStackTrace();
         }
     }
+
     public ArrayList<Doctor> getAllInformation(){
         ArrayList<Doctor> doctor=new ArrayList<>();
         Packet packet=new Packet("LIST_DOCTOR", null);
@@ -76,6 +77,18 @@ public class ClientSocket {
         }
         return doctor;
     }
+    public ArrayList<User> getInfoUs(){
+        ArrayList<User> user=new ArrayList<>();
+        Packet packet=new Packet("LIST_USER", null);
+        try {
+            oos.writeObject(packet);
+            Packet response=(Packet)ois.readObject();
+            user=(ArrayList<User>)response.getData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
     public void editDoctor(Doctor doctor){
         Packet packet=new Packet("EDIT_DOCTOR", doctor);
         try {
@@ -84,8 +97,24 @@ public class ClientSocket {
             e.printStackTrace();
         }
     }
+    public void editUser(User user){
+        Packet packet=new Packet("EDIT_USER", user);
+        try {
+            oos.writeObject(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void deleteDoctor(Doctor doctor){
         Packet packet=new Packet("DELETE_DOCTOR", doctor);
+        try {
+            oos.writeObject(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteUser(User user){
+        Packet packet=new Packet("DELETE_USER", user);
         try {
             oos.writeObject(packet);
         } catch (IOException e) {

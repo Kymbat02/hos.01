@@ -34,7 +34,13 @@ public class Admin extends Panel {
         clientButton = new Button("CLIENTS");
         clientButton.setLocation(280, 260);
         add(clientButton);
-
+        clientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.adminPage.setVisible(false);
+                parent.clientsPage.setVisible(true);
+            }
+        });
         incomeButton = new Button("MONEY");
         incomeButton.setLocation(280, 320);
         add(incomeButton);

@@ -8,11 +8,14 @@ import HOSPITAL_02.DATA.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class ServerThread extends Thread {
     private Socket socket;
+    private Serializable user;
+
 
     public ServerThread(Socket socket) {
         this.socket = socket;
@@ -48,13 +51,28 @@ public class ServerThread extends Thread {
                     Packet packet1=new Packet("LIST_DOCTOR", doctor);
                     oos.writeObject(packet1);
                 }
+                else if(packet.getCode().equals("LIST_USER")){
+                    ArrayList<User> user=ServerApp.getInfoUs();
+                    Packet packet1=new Packet("LIST_USER", user);
+                    oos.writeObject(packet1);
+                }
                 else if(packet.getCode().equals("EDIT_DOCTOR")){
                     Doctor doctor=(Doctor)packet.getData();
                     ServerApp.editDoctor(doctor);
                 }
+
+                else if(packet.getCode().equals("EDIT_USER")){
+                    User user=(User)packet.getData();
+                    ServerApp.editUser(user);
+                }
                 else if(packet.getCode().equals("DELETE_DOCTOR")){
                     Doctor doctor=(Doctor)packet.getData();
                     ServerApp.deleteDoctor(doctor.getId());
+                }
+
+                else if(packet.getCode().equals("DELETE_USER")){
+                    User user=(User)packet.getData();
+                    ServerApp.deleteUser(user.getId());
                 }
                 else if(packet.getCode().equals("RECORD_TREATMENT")){
                     Treatment treatment=(Treatment)packet.getData();

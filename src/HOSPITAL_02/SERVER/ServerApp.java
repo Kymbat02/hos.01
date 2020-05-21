@@ -3,6 +3,12 @@ package HOSPITAL_02.SERVER;
 import HOSPITAL_02.DATA.Doctor;
 import HOSPITAL_02.DATA.Treatment;
 import HOSPITAL_02.DATA.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -28,6 +34,7 @@ public class ServerApp {
             e.printStackTrace();
         }
     }
+
     public static void addUser(User user){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
@@ -81,6 +88,7 @@ public class ServerApp {
         }
         return user;
     }
+
     public static void addDoctor(Doctor doc){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
@@ -119,6 +127,26 @@ public class ServerApp {
         }
         return doctor;
     }
+    public static ArrayList<User> getInfoUs(){
+        ArrayList<User> user=new ArrayList<>();
+        try {
+            PreparedStatement statement=connection.prepareStatement(""+
+                    "SELECT * Where role=2 FROM user");
+            ResultSet resultSet=statement.executeQuery();
+            while(resultSet.next()){
+                Long id=resultSet.getLong("id");
+                String fullname=resultSet.getString("fullname");
+                String login=resultSet.getString("login");
+
+
+                user.add(new User(id, fullname, login));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
     public static void editDoctor(Doctor doctor){
         try {
             PreparedStatement statement=connection.prepareStatement(""+
@@ -136,6 +164,20 @@ public class ServerApp {
             e.printStackTrace();
         }
     }
+    public static void editUser(User user){
+        try {
+            PreparedStatement statement=connection.prepareStatement(""+
+                    " UPDATE user set fullname=?,login=?"+
+                    " WHERE id=?");
+            statement.setString(1,user.getFullname());
+            statement.setString(2,user.getLogin());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Doctor getDoctor(Long id) {
         Doctor doctor=new Doctor();
         try {
@@ -174,6 +216,17 @@ public class ServerApp {
     public static void deleteDoctor(Long id){
         try {
             PreparedStatement statement=connection.prepareStatement("DELETE FROM doctors WHERE id_doctor=? ");
+            statement.setLong(1,id);
+            statement.executeUpdate();
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void deleteUser(Long id){
+        try {
+            PreparedStatement statement=connection.prepareStatement("DELETE FROM user WHERE id=? ");
             statement.setLong(1,id);
             statement.executeUpdate();
             statement.close();

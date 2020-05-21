@@ -1,7 +1,15 @@
 package HOSPITAL_02.CLIENT.PAGE;
 
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
 import javax.swing.*;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
     public ClientSocket clientSocket;
@@ -12,12 +20,12 @@ public class MainFrame extends JFrame {
     public DoctorRegisPage doctorRegisPage;
     public UserPage userPage;
     public Treatment treatment;
+    public ClientsPage clientsPage;
     public MainFrame() {
     setSize(800, 800);
         setTitle("Hospital");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(new JLabel(new ImageIcon("img9.jpg")));
 
         clientSocket = new ClientSocket();
 
@@ -49,5 +57,9 @@ public class MainFrame extends JFrame {
         treatment.setVisible(false);
         add(treatment);
 
+
+        clientsPage=new ClientsPage(this);
+        clientsPage.setVisible(false);
+        add(clientsPage);
     }
 }

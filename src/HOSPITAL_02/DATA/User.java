@@ -28,6 +28,12 @@ public class User implements Serializable {
         this.fullname=fullname;
     }
 
+    public User(Long id, String login, String fullname) {
+        this.id = id;
+        this.login = login;
+        this.fullname = fullname;
+    }
+
     public Long getId() {
         return id;
     }
