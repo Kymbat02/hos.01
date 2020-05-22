@@ -1,6 +1,7 @@
 package HOSPITAL_02.CLIENT.PAGE;
 
 
+import com.sun.glass.ui.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame  {
     public ClientSocket clientSocket;
     public Menu menuPage;
     public Registration regPage;
@@ -22,10 +23,20 @@ public class MainFrame extends JFrame {
     public Treatment treatment;
     public ClientsPage clientsPage;
     public MainFrame() {
+
     setSize(800, 800);
         setTitle("Hospital");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JPanel pan = new JPanel();
+//        JLabel jlb = new JLabel();
+//        jlb.setIcon(new ImageIcon(getClass().getResource("HOSPITAL_02//1mozgovye-disfunkcii.jpg")));
+//
+//        pan.add(jlb);
+//
+//        this.setContentPane(jlb);
+//        this.setResizable(false);
+//        this.pack();
 
         clientSocket = new ClientSocket();
 

@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
             add(userLabel);
 
             treatment=new Button("Sign to treatment");
-            treatment.setLocation(280, 200);
+            treatment.setLocation(280, 220);
             add(treatment);
             treatment.addActionListener(new ActionListener() {
                 @Override
@@ -27,16 +27,16 @@ import java.awt.event.ActionListener;
                     parent.treatment.setVisible(true);
                 }
             });
-//
-//            recordButton=new Button("Records");
-//            recordButton.setLocation(180, 320);
-//            add(recordButton);
-//            recordButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    parent.userPage.setVisible(false);
-//                    parent.recordPage.setVisible(true);
-//                }
+
+            recordButton=new Button("Records");
+           recordButton.setLocation(280, 300);
+            add(recordButton);
+            //recordButton.addActionListener(new ActionListener() {
+                //@Override
+             //   public void actionPerformed(ActionEvent e) {
+
+             //       parent.recordPage.setVisible(true);
+           //     }
 //            });
 
 

@@ -82,24 +82,24 @@ public class DoctorRegisPage extends Panel {
         updateMedCenter();
 
         idLabel=new Label("ID");
-        idLabel.setLocation(20, 420);
+        idLabel.setLocation(40, 420);
         add(idLabel);
         idField=new Field();
-        idField.setLocation(150, 420);
+        idField.setLocation(200, 420);
         add(idField);
 
         fiotLabel=new Label(" Full name :");
-        fiotLabel.setLocation(20, 460);
+        fiotLabel.setLocation(40, 460);
         add(fiotLabel);
         fioField=new Field();
-        fioField.setLocation(150, 460);
+        fioField.setLocation(200, 460);
         add(fioField);
 
         placeOfWorkLabel=new Label("Working place: ");
-        placeOfWorkLabel.setLocation(20, 660);
+        placeOfWorkLabel.setLocation(40, 620);
         add(placeOfWorkLabel);
         jComboPlaces=new JComboBox(places);
-        jComboPlaces.setBounds(150, 660, 200, 30);
+        jComboPlaces.setBounds(200, 620, 200, 30);
         jComboPlaces.setBackground(Color.orange);
         jComboPlaces.setForeground(Color.black);
         jComboPlaces.setFont(new Font("Arial",1, 16));
@@ -107,29 +107,29 @@ public class DoctorRegisPage extends Panel {
         add(jComboPlaces);
 
         priceLabel=new Label("Price:");
-        priceLabel.setLocation(20, 500);
+        priceLabel.setLocation(40, 500);
         add(priceLabel);
         priceField=new Field();
-        priceField.setLocation(150, 500);
+        priceField.setLocation(200, 500);
         add(priceField);
 
         countLabel=new Label("Count:");
-        countLabel.setLocation(20, 540);
+        countLabel.setLocation(40, 540);
         add(countLabel);
         countField=new Field();
-        countField.setLocation(150, 540);
+        countField.setLocation(200, 540);
         add(countField);
 
-        ocLabel=new Label("Occupied::");
-        ocLabel.setLocation(20, 600);
+        ocLabel=new Label("Occupied:");
+        ocLabel.setLocation(40, 580);
         add(ocLabel);
         ocField=new Field();
-        ocField.setLocation(150, 600);
+        ocField.setLocation(200, 580);
         add(ocField);
 
 
         addButton= new Button("ADD");
-        addButton.setLocation(500, 450);
+        addButton.setLocation(0, 700);
         add(addButton);
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -161,7 +161,7 @@ public class DoctorRegisPage extends Panel {
         });
 
         editButton=new Button("EDIT");
-        editButton.setLocation(500, 500);
+        editButton.setLocation(200, 700);
         add(editButton);
         editButton.addActionListener(new ActionListener() {
             @Override
@@ -181,7 +181,7 @@ public class DoctorRegisPage extends Panel {
         });
 
         deleteButton=new Button("DELETE");
-        deleteButton.setLocation(500, 550);
+        deleteButton.setLocation(400, 700);
         add(deleteButton);
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -196,7 +196,7 @@ public class DoctorRegisPage extends Panel {
         });
 
         backButton=new Button("BACK");
-        backButton.setLocation(500, 600);
+        backButton.setLocation(600, 700);
         add(backButton);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -206,7 +206,7 @@ public class DoctorRegisPage extends Panel {
             }
         });
         refreshButton=new Button("REFRESH");
-        refreshButton.setLocation(500,650);
+        refreshButton.setLocation(550,650);
         add(refreshButton);
         refreshButton.addActionListener(new ActionListener() {
             @Override
